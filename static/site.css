@@ -40,7 +40,6 @@ body{
 .g-signin2{
     float:right;
     padding-top:6;
-    padding-right:2%; 
 }
 #title{
     display: block;
@@ -52,7 +51,7 @@ body{
     background-color:#333;
     overflow: hidden;
 }
-#navMain a {
+#mainlogo {
     float: left;
     color: #f2f2f2;
     text-align: center;
@@ -68,5 +67,13 @@ body{
 #signOut{
     padding-top:6;
     float:right;
+    padding: 14px 15px;
+    color: #f2f2f2;
+    text-decoration: none;
+    text-align: center;
     visibility: hidden;
 }
+#signOut:hover{
+    background-color: #666;
+}
+
