@@ -415,8 +415,9 @@ function fullScreenCanvas(){
     canvas.height =  window.innerHeight;
 }
 function aspectRatioFullScreenCanvas(){
-    var heightW = window.innerHeight;
-    var widthW = window.innerWidth;
+    var ratio = 0.76;
+    var heightW = window.innerHeight * ratio;
+    var widthW = window.innerWidth * ratio;
     var aspectR = virtualWidth / virtualHeight;
     if(aspectR > widthW/heightW){
         canvas.width = widthW;
@@ -426,6 +427,11 @@ function aspectRatioFullScreenCanvas(){
         canvas.height = heightW;
         canvas.width = heightW * aspectR;
     }
+    document.getElementById('leftBar').style.width = (window.innerWidth - canvas.width)/2;
+    document.getElementById('rightBar').style.width = (window.innerWidth - canvas.width)/2;
+    document.getElementById('leftBar').style.height = canvas.height;
+    document.getElementById('rightBar').style.height = canvas.height;
+    document.getElementById('bottomBar').style.height = window.innerHeight - (canvas.height + document.getElementById('topBar').clientHeight);
 }
 function fitDivCanvas(){
     var divIn = document.getElementById("myDIV"); //replace myDiv with the div the canvas is within
@@ -845,7 +851,6 @@ function scene1(a){
         //logic for scene 1
         var b = findObject("buttonPlay");
         if(tick1){
-            bgM.play();
             tick1 = false;
         }
         if(b.hovered){

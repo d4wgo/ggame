@@ -5,9 +5,21 @@
             type = "text/css"
             href = "static/site.css"/>
         <link href="https://fonts.googleapis.com/css?family=Iceberg" rel="stylesheet">
+        <meta name="google-signin-client_id" content="261229008205-jhuk3qpame2psmeekl73f491suhkkjl3.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <link rel="shortcut icon" href="/static/images/favicon.ico">
         </head>
     </head>
-    <body onload="ready();">
+    <body>
+        <div id="topBar">
+            <div id="navMain">
+                <a href="/"><img src="/static/images/reactlogo.png" width="82.5" height="30"></a>
+                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+            </div>
+        </div>
+        <div id="leftBar"></div>
+        <div id="rightBar"></div>
+        <div id="bottomBar"></div>
         <canvas id="myCanvas"></canvas>
         <script src="static/dawgine.js"></script>
     </body>
