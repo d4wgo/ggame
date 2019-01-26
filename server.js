@@ -31,3 +31,10 @@ app.get('/mobile',function(req,res){
 server.listen(8080, function() {
     console.log('Starting server on port 8080');
 });
+io.on('connection', function (socket) {
+    socket.on("ping1", function(){
+        socket.emit("pong");
+    });
+    socket.on('disconnect', function() {
+	});
+});
