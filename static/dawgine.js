@@ -767,7 +767,10 @@ var sendTime;
 function scene1(a){
     if(a == "start"){
         //start function for scene1
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=buttonPlayCopy0^type=button^x=800^y=650^sx=340^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=title^type=ui^x=800^y=250^sx=200^sy=200");
+        var titleImg = findObject("title");
+        titleImg.image = new Image();
+        titleImg.image.src = "static/images/reactfavi.png";
         var b = findObject("buttonPlay");
         b.text = "PLAY";
         b.textColor = "black";
