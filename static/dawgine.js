@@ -26,7 +26,7 @@ class GameObject{
         this.gravityTimer = 0;
         this.yForce = 0;
         this.text = null;
-        this.textColor = "black";
+        this.textColor = "white";
         this.textSize = 20;
         this.textOffsetY = 0;
         this.textOffsetX = 0;
