@@ -837,10 +837,6 @@ sp.src = "https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif";
 var click = new Audio("https://vocaroo.com/media_command.php?media=s0ZwPJo9nk2d&command=download_mp3");
 var tick1 = true;
 var sendTime;
-socket.on("pong",function(){
-    var pingtime = Date.now() - sendTime;
-    console.log("Ping = " + pingtime);
-});
 function scene1(a){
     if(a == "start"){
         //start function for scene1
@@ -866,10 +862,6 @@ function scene1(a){
         if(b.clicked){
             switchScene(2);
             click.play();
-        }
-        if(clickInput.w){
-            socket.emit("ping1");
-            sendTime = Date.now();
         }
     }
 }
