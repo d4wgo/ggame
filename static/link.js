@@ -7,7 +7,7 @@ function pingTest(){
 }
 socket.on("pong",function(){
     var p = Date.now() - origT;
-    console.log("Ping to server is: " + p);
+    //console.log("Ping to server is: " + p);
 });
 function setName(a){
     name1 = a;

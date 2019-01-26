@@ -813,7 +813,7 @@ function scene1(a){
     }
 }
 function signInChange(){
-    if(scene == 1){
+    if(scene == 1 || scene == 4){
         findObject("userProf").image.src = document.getElementById("profPic").src;
     }
 }
@@ -863,6 +863,9 @@ function scene4(a){
         var un = findObject("unamespot");
         un.text = "Welcome " + getName();
         un.textSize = 64;
+        if(getName().length > 12){
+            un.textSize -= getName().length;
+        }
     }
     else{
         var up = findObject("userProf");
