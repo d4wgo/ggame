@@ -10,7 +10,6 @@ var buttons = []; //clickable buttons
 //font:
 var font = "Iceberg";
 //gameObjects.push(newGO);
-var socket = io.connect('http://localhost:8080');
 class GameObject{
     constructor(a,b,c,d,e){
         this.id = a;
@@ -594,119 +593,47 @@ function draw(){
     ctx.translate(oDistX * scaleX,oDistY * scaleY);
     for(var i = 0; i < nullObjects.length; i++){
         var tempObject = nullObjects[i];
-        if(tempObject.gravity != null){
-            applyGravity(tempObject);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.color != null){
-            ctx.fillStyle = tempObject.color;
-            ctx.fillRect((tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.image != null){
-            ctx.drawImage(tempObject.image,(tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(-tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.text != null){
-            ctx.textAlign = "center";
-            ctx.fillStyle = tempObject.textColor;
-            ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
-            ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
-        }
+        drawIt(tempObject);
     }
     for(var i = 0; i < gameObjects.length; i++){
         var tempObject = gameObjects[i];
-        if(tempObject.gravity != null){
-            applyGravity(tempObject);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.color != null){
-            ctx.fillStyle = tempObject.color;
-            ctx.fillRect((tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.image != null){
-            ctx.drawImage(tempObject.image,(tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(-tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.text != null){
-            ctx.textAlign = "center";
-            ctx.fillStyle = tempObject.textColor;
-            ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
-            ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
-        }
+        drawIt(tempObject);
     }
     for(var i = 0; i < buttons.length; i++){
         var tempObject = buttons[i];
-        if(tempObject.gravity != null){
-            applyGravity(tempObject);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.color != null){
-            ctx.fillStyle = tempObject.color;
-            ctx.fillRect((tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.image != null){
-            ctx.drawImage(tempObject.image,(tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(-tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.text != null){
-            ctx.textAlign = "center";
-            ctx.fillStyle = tempObject.textColor;
-            ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
-            ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
-        }
+        drawIt(tempObject);
     }
     for(var i = 0; i < ui.length; i++){
         var tempObject = ui[i];
-        if(tempObject.gravity != null){
-            applyGravity(tempObject);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.color != null){
-            ctx.fillStyle = tempObject.color;
-            ctx.fillRect((tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.image != null){
-            ctx.drawImage(tempObject.image,(tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
-        }
-        if(tempObject.rotation != null){
-            ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
-            ctx.rotate(-tempObject.rotation);
-            ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
-        }
-        if(tempObject.text != null){
-            ctx.textAlign = "center";
-            ctx.fillStyle = tempObject.textColor;
-            ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
-            ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
-        }
+        drawIt(tempObject);
+    }
+}
+function drawIt(tempObject){
+    if(tempObject.gravity != null){
+        applyGravity(tempObject);
+    }
+    if(tempObject.rotation != null){
+        ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
+        ctx.rotate(tempObject.rotation);
+        ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
+    }
+    if(tempObject.color != null){
+        ctx.fillStyle = tempObject.color;
+        ctx.fillRect((tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
+    }
+    if(tempObject.image != null){
+        ctx.drawImage(tempObject.image,(tempObject.x - tempObject.sizeX/2) * scaleX,(tempObject.y - tempObject.sizeY/2) * scaleY,tempObject.sizeX * scaleX,tempObject.sizeY * scaleY);
+    }
+    if(tempObject.rotation != null){
+        ctx.translate(tempObject.x * scaleX,tempObject.y * scaleY);
+        ctx.rotate(-tempObject.rotation);
+        ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
+    }
+    if(tempObject.text != null){
+        ctx.textAlign = "center";
+        ctx.fillStyle = tempObject.textColor;
+        ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
+        ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
     }
 }
 function applyGravity(a){
@@ -840,12 +767,20 @@ var sendTime;
 function scene1(a){
     if(a == "start"){
         //start function for scene1
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=buttonPlayCopy0^type=button^x=800^y=650^sx=340^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=user^type=button^x=1520^y=70^sx=100^sy=100^image=https://i.ibb.co/2cn0dyf/red-panel.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=buttonPlayCopy0^type=button^x=800^y=650^sx=340^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
         var b = findObject("buttonPlay");
         b.text = "PLAY";
         b.textColor = "black";
         b.textSize = 60;
         b.textOffsetY = 14;
+        buttons.push(new GameObject("userProf",1520,70,87.5,87.5));
+        var up = findObject("userProf");
+        up.image = new Image();
+        up.image.src = document.getElementById("profPic").src;
+        ui.push(new GameObject("userProfFrame",1520,70,100,100));
+        var upf = findObject("userProfFrame");
+        upf.image = new Image();
+        upf.image.src = "static/images/profileframe.png";
     }
     else{
         //logic for scene 1
@@ -863,6 +798,14 @@ function scene1(a){
             switchScene(2);
             click.play();
         }
+        if(clickInput.w){
+            pingTest();
+        }
+    }
+}
+function signInChange(){
+    if(scene == 1){
+        findObject("userProf").image.src = document.getElementById("profPic").src;
     }
 }
 var totalTime = 0;
