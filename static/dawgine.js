@@ -834,8 +834,6 @@ b2.src = "https://i.ibb.co/rkFB0RQ/red-button02.png";
 var sp = new Image();
 sp.src = "https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif";
 var click = new Audio("https://vocaroo.com/media_command.php?media=s0ZwPJo9nk2d&command=download_mp3");
-var bgM = new Audio("https://vocaroo.com/media_command.php?media=s0u1JqfBdkbA&command=download_mp3");
-//bgM.autoplay = true;
 var tick1 = true;
 function scene1(a){
     if(a == "start"){
