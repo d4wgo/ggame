@@ -1,8 +1,5 @@
 if(checkMobile()){
-    window.location.href = "https://www.google.com/";
-}
-else{
-    console.log("pc");
+    window.location.pathname = '/mobile';
 }
 function checkMobile(){
     var check = false;

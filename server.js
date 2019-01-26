@@ -25,6 +25,9 @@ app.get('/',function(req,res){
     res.sendFile(path.join(__dirname+'/client/play.html'));
     //__dirname : It will resolve to your project folder.
 });
+app.get('/mobile',function(req,res){
+    res.sendFile(path.join(__dirname+'/client/mobile.html'));
+});
 server.listen(8080, function() {
     console.log('Starting server on port 8080');
 });
