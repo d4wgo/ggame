@@ -756,9 +756,9 @@ function switchScene(a){
     }
 }
 var b1 = new Image();
-b1.src = "https://i.ibb.co/LgHbHPs/red-button01.png"; 
+b1.src = "static/images/buttondefault.png"; 
 var b2 = new Image();
-b2.src = "https://i.ibb.co/rkFB0RQ/red-button02.png";
+b2.src = "static/images/buttondefaultpressed.png";
 var sp = new Image();
 sp.src = "https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif";
 var click = new Audio("https://vocaroo.com/media_command.php?media=s0ZwPJo9nk2d&command=download_mp3");
@@ -767,15 +767,14 @@ var sendTime;
 function scene1(a){
     if(a == "start"){
         //start function for scene1
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=title^type=ui^x=800^y=250^sx=200^sy=200");
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png>id=buttonPlay^type=button^x=800^y=450^sx=420^sy=100^image=https://i.ibb.co/LgHbHPs/red-button01.png>id=title^type=ui^x=800^y=250^sx=200^sy=200");
         var titleImg = findObject("title");
         titleImg.image = new Image();
         titleImg.image.src = "static/images/reactfavi.png";
         var b = findObject("buttonPlay");
         b.text = "PLAY";
-        b.textColor = "black";
+        b.textColor = "white";
         b.textSize = 60;
-        b.textOffsetY = 14;
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
@@ -795,9 +794,11 @@ function scene1(a){
         }
         if(b.hovered){
             b.image = b2;
+            b.textOffsetY = 21;
         }
         else{
             b.image = b1;
+            b.textOffsetY = 17.5;
         }
         if(b.clicked){
             click.play();
@@ -823,14 +824,15 @@ function signInChange(){
 var totalTime = 0;
 function scene2(a){
     if(a == "start"){
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
-        gameObjects.push(new GameObject("loadSprite",800,450,200,200));
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
+        gameObjects.push(new GameObject("loadSprite",800,450,100,100));
         var s = findObject("loadSprite");
-        s.image = sp;
+        s.image = new Image();
+        s.image.src = "static/images/reactfavi.png";
         s.rotation = 0;
         var t = findObject("title");
         t.text = "Loading";
-        t.textColor = "black";
+        t.textColor = "white";
         t.textSize = 60;
     }
     else{
@@ -844,7 +846,7 @@ function scene2(a){
 }
 function scene3(a){
     if(a == "start"){
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png");
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png");
     }
     else{
         
@@ -852,7 +854,7 @@ function scene3(a){
 }
 function scene4(a){
     if(a == "start"){
-        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png");
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png");
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
