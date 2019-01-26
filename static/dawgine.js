@@ -773,7 +773,7 @@ function scene1(a){
         b.textColor = "black";
         b.textSize = 60;
         b.textOffsetY = 14;
-        buttons.push(new GameObject("userProf",1520,70,87.5,87.5));
+        buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
         up.image.src = document.getElementById("profPic").src;
@@ -785,6 +785,8 @@ function scene1(a){
     else{
         //logic for scene 1
         var b = findObject("buttonPlay");
+        var up = findObject("userProf");
+        var upf = findObject("userProfFrame");
         if(tick1){
             tick1 = false;
         }
@@ -795,11 +797,18 @@ function scene1(a){
             b.image = b1;
         }
         if(b.clicked){
-            switchScene(2);
             click.play();
+            switchScene(2);
         }
-        if(clickInput.w){
-            pingTest();
+        if(up.hovered){
+            upf.image.src = "static/images/profileframehover.png";
+        }
+        else{
+            upf.image.src = "static/images/profileframe.png";
+        }
+        if(up.clicked){
+            click.play();
+            switchScene(4);
         }
     }
 }
@@ -840,10 +849,34 @@ function scene3(a){
 }
 function scene4(a){
     if(a == "start"){
-
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=https://i.ibb.co/q7phQLH/backgnew.png");
+        buttons.push(new GameObject("userProf",1520,70,88,88));
+        var up = findObject("userProf");
+        up.image = new Image();
+        up.image.src = document.getElementById("profPic").src;
+        ui.push(new GameObject("userProfFrame",1520,70,100,100));
+        var upf = findObject("userProfFrame");
+        upf.image = new Image();
+        upf.image.src = "static/images/profileframe.png";
+        //-
+        nullObjects.push(new GameObject("unamespot",300,110,0,0));
+        var un = findObject("unamespot");
+        un.text = "Welcome " + getName();
+        un.textSize = 64;
     }
     else{
-        
+        var up = findObject("userProf");
+        var upf = findObject("userProfFrame");
+        if(up.hovered){
+            upf.image.src = "static/images/profileframehover.png";
+        }
+        else{
+            upf.image.src = "static/images/profileframe.png";
+        }
+        if(up.clicked){
+            click.play();
+            switchScene(1);
+        }
     }
 }
 function scene5(a){
