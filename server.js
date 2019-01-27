@@ -46,16 +46,30 @@ io.on('connection', function (socket) {
     });
     socket.on("aimScoreSubmit", function(name,time){
         if(name != "Guest"){
-            if(parseFloat(time) < topAimScoreArrayTime[9]){
+            var writeA = true;
+            var preincluded = false;
+            if(topAimScoreArray.includes(name)){
+                var ind = topAimScoreArray.indexOf(name);
+                if(topAimScoreArrayTime[ind] < parseFloat(time)){
+                    writeA = false;
+                }
+                else{
+                    topAimScoreArray.splice(ind,1);
+                    topAimScoreArrayTime.splice(ind,1);
+                }
+            }
+            if(parseFloat(time) < topAimScoreArrayTime[9] && writeA){
                 topAimScoreArrayTime.push(parseFloat(time));
                 topAimScoreArrayTime.sort(function(a, b){return a - b});
-                for(var i = 0; i < 10; i++){
+                for(var i = 0; i < topAimScoreArrayTime.length; i++){
                     if(topAimScoreArrayTime[i] == parseFloat(time)){
-                        for(var j = 9; j > i; j--){
+                        for(var j = topAimScoreArray.length; j > i; j--){
                             topAimScoreArray[j] = topAimScoreArray[j - 1];
                         }
                         topAimScoreArray[i] = name;
-                        topAimScoreArrayTime.splice(10,1);
+                        if(topAimScoreArrayTime.length > 10){
+                            topAimScoreArrayTime.splice(10,1);
+                        }
                     }
                 }
                 var savedArray = users.findOne({uname: "topAimArray"});
