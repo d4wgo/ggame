@@ -990,7 +990,7 @@ function scene5(a){
         findObject("mbg").image = view0;
         ui.push(new GameObject("howtoplay",800,300,0,0));
         var htp = findObject("howtoplay");
-        htp.text = "Click 10 colored blocks as fast as you can!";
+        htp.text = "Click 15 colored blocks as fast as you can!";
         htp.textSize = 64;
         htp.textColor = "white";
         buttons.push(new GameObject("backb",200,80,300,100));
@@ -1072,7 +1072,7 @@ function scene6(a){
         cntd.textColor = "white";
         ui.push(new GameObject("score",1500,850,0,0));
         var sc = findObject("score");
-        sc.text = gameScore + "/10";
+        sc.text = gameScore + "/15";
         sc.textSize = 64;
         sc.textColor = "white";
         ui.push(new GameObject("time",100,850,0,0));
@@ -1133,6 +1133,10 @@ function scene6(a){
         var aT10 = findObject("allTime10");
         aT10.textSize = 32;
         aT10.textColor = "white";
+        ui.push(new GameObject("rms",750,750,0,0));
+        var rmsign = findObject("rms");
+        rmsign.textSize = 32;
+        rmsign.textColor = "white";
     }
     else{
         var cntd = findObject("countdown");
@@ -1151,6 +1155,7 @@ function scene6(a){
         var aT8 = findObject("allTime8");
         var aT9 = findObject("allTime9");
         var aT10 = findObject("allTime10");
+        var rmsign = findObject("rms");
         if(countdown){
             countdownTimer -= delta;
             cntd.text = countdownTimer.toString().substring(0,1);
@@ -1178,7 +1183,7 @@ function scene6(a){
                 hitsound.play();
                 gameScore++;
                 randomizeWorld();
-                if(gameScore == 10){
+                if(gameScore == 15){
                     gameStarted = false;
                     drawResults = true;
                     aT1.text = topScoreArray[0];
@@ -1248,6 +1253,12 @@ function scene6(a){
                 worldTextAlign = "center";
                 countdown = true;
                 switchScene(6);
+            }
+            if(getName() == "Guest"){
+                rmsign.text = "Login with Google to sumbit scores!";
+            }
+            else{
+                rmsign.text = "";
             }
         }
     }
