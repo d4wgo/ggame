@@ -37,6 +37,9 @@ app.get('/',function(req,res){
 app.get('/mobile',function(req,res){
     res.sendFile(path.join(__dirname+'/client/mobile.html'));
 });
+app.get('/edge',function(req,res){
+    res.sendFile(path.join(__dirname+'/client/edge.html'));
+});
 server.listen(8080, function() {
     console.log('Starting server on port 8080');
 });
