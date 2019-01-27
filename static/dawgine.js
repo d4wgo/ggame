@@ -873,7 +873,7 @@ function scene2(a){
         totalTime += delta;
         var s = findObject("loadSprite");
         s.rotation += delta/100;
-        if(totalTime > 2000){
+        if(totalTime > 1500){
             switchScene(goalScene);
         }
     }
@@ -1238,6 +1238,7 @@ function scene6(a){
             if(tomenu.clicked){
                 worldTextAlign = "center";
                 goalScene = 1;
+                click.play();
                 switchScene(2);
             }
             toretry.text = "Retry";
@@ -1252,6 +1253,7 @@ function scene6(a){
             if(toretry.clicked){
                 worldTextAlign = "center";
                 countdown = true;
+                click.play();
                 switchScene(6);
             }
             if(getName() == "Guest"){
