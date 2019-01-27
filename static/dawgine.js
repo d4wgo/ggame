@@ -1052,6 +1052,9 @@ socket.on("aimScores", function(names,times){
         findObject("allTime10").text = "10. " + names[9] + " - " + times[9];
     }
 });
+socket.on("bestScore", function(score){
+    beststring = score.toString();
+});
 function scene6(a){
     //aim game game
     if(a == "start"){
