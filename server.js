@@ -20,6 +20,14 @@ function databaseInitialize() {
     if (users === null) {
       users = db.addCollection("users", { disableChangesApi: false });
     }
+    var aimArray = users.findOne({uname: "topAimArray"});
+    if(aimArray == null){
+        users.insert({uname: "topAimArray", namesArray: topAimScoreArray, timesArray: topAimScoreArrayTime});
+    }
+    else{
+        topAimScoreArray = aimArray.namesArray;
+        topAimScoreArrayTime = aimArray.timesArray;
+    }
 }
 app.set('port', 8080);
 app.use('/static', express.static(__dirname + '/static'));
@@ -51,6 +59,10 @@ io.on('connection', function (socket) {
                         topAimScoreArrayTime.splice(10,1);
                     }
                 }
+                var savedArray = users.findOne({uname: "topAimArray"});
+                savedArray.namesArray = topAimScoreArray;
+                savedArray.timesArray = topAimScoreArrayTime;
+                users.update(savedArray);
             }
             var tempUser = users.findOne({uname: name});
             if(tempUser != null){
