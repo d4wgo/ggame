@@ -56,6 +56,7 @@ io.on('connection', function (socket) {
                 else{
                     topAimScoreArray.splice(ind,1);
                     topAimScoreArrayTime.splice(ind,1);
+                    topAimScoreArray.push("temp");
                 }
             }
             if(parseFloat(time) < topAimScoreArrayTime[9] && writeA){
@@ -63,7 +64,7 @@ io.on('connection', function (socket) {
                 topAimScoreArrayTime.sort(function(a, b){return a - b});
                 for(var i = 0; i < topAimScoreArrayTime.length; i++){
                     if(topAimScoreArrayTime[i] == parseFloat(time)){
-                        for(var j = topAimScoreArray.length; j > i; j--){
+                        for(var j = 9; j > i; j--){
                             topAimScoreArray[j] = topAimScoreArray[j - 1];
                         }
                         topAimScoreArray[i] = name;
