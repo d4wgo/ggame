@@ -77,4 +77,11 @@ body{
 #signOut:hover{
     background-color: #666;
 }
+#footer{
+    color: #f2f2f2;
+    text-align: center;
+    position: absolute;
+    bottom:0;
+    padding-bottom: 6px;
+}
 
