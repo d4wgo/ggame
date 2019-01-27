@@ -52,7 +52,7 @@ io.on('connection', function (socket) {
                     }
                 }
             }
-            var tempUser = users.findOne({name: data});
+            var tempUser = users.findOne({uname: name});
             if(tempUser != null){
                 if(tempUser.bestaimtime > parseFloat(time)){
                     tempUser.bestaimtime = parseFloat(time);
@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
         socket.emit("aimScores",topAimScoreArray,topAimScoreArrayTime);
     });
     socket.on("signin", function(name){
-        var tempUser = users.findOne({name: data});
+        var tempUser = users.findOne({uname: name});
         if(tempUser == null){
             users.insert({uname: name, bestaimtime: 999.9});
         }
