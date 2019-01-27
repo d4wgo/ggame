@@ -15,3 +15,8 @@ function setName(a){
 function getName(){
     return name1;
 }
+function signInEvent(){
+    if(name1 != "Guest"){
+        socket.emit("signin",name1);
+    }
+}

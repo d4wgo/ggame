@@ -10,6 +10,7 @@ function onSignIn(googleUser) {
     document.getElementById("profPic").src = proUrl;
     document.getElementById("mainSignIn").style.visibility = "hidden";
     document.getElementById("signOut").style.visibility = "visible";
+    signInEvent();
     signInChange();
 }
 function signOut() {

@@ -1,5 +1,6 @@
 //image refrences
 //---------------
+var socket = io.connect('http://localhost:8080');
 var gameObjects = []; //gameobjects are seen by rayscans
 var nullObjects = []; //null objects are not seen by rayscans
 var ui = [];
@@ -9,6 +10,7 @@ var buttons = []; //clickable buttons
 //new var newGO = GameObject(id,x,y,posX,posY,sizeX,sizeY);
 //font:
 var font = "Iceberg";
+var worldTextAlign = "center";
 //gameObjects.push(newGO);
 class GameObject{
     constructor(a,b,c,d,e){
@@ -587,6 +589,7 @@ function runGame(){
     window.requestAnimationFrame(runGame);
 }
 window.requestAnimationFrame(runGame);
+var objectType = null;
 function draw(){
     ctx.setTransform(1,0,0,1,0,0);
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -630,7 +633,10 @@ function drawIt(tempObject){
         ctx.translate(-tempObject.x * scaleX,-tempObject.y * scaleY);
     }
     if(tempObject.text != null){
-        ctx.textAlign = "center";
+        ctx.textAlign = worldTextAlign;
+        if(tempObject.id == "toMenu" || tempObject.id == "toRetry"){
+            ctx.textAlign = "center";
+        }
         ctx.fillStyle = tempObject.textColor;
         ctx.font = (tempObject.textSize * ((scaleX + scaleY)/2)) + "px " + font;
         ctx.fillText(tempObject.text,(tempObject.x + tempObject.textOffsetX) * scaleX,(tempObject.y + tempObject.textOffsetY) * scaleY);
@@ -764,6 +770,7 @@ sp.src = "https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif";
 var click = new Audio("https://vocaroo.com/media_command.php?media=s0ZwPJo9nk2d&command=download_mp3");
 var tick1 = true;
 var sendTime;
+var goalScene = 3;
 function scene1(a){
     if(a == "start"){
         //start function for scene1
@@ -802,6 +809,7 @@ function scene1(a){
         }
         if(b.clicked){
             click.play();
+            goalScene = 3;
             switchScene(2);
         }
         if(up.hovered){
@@ -821,10 +829,21 @@ function signInChange(){
         findObject("userProf").image.src = document.getElementById("profPic").src;
     }
 }
+var view0 = new Image();
+var view1 = new Image();
+var view2 = new Image();
+var view3 = new Image();
+var view4 = new Image();
+var view5 = new Image();
+var view6 = new Image();
+var view7 = new Image();
+var rsBg = new Image();
 var totalTime = 0;
+var hitsound;
 function scene2(a){
     if(a == "start"){
         loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png>id=title^type=button^x=800^y=250^sx=600^sy=120");
+        totalTime = 0;
         gameObjects.push(new GameObject("loadSprite",800,450,100,100));
         var s = findObject("loadSprite");
         s.image = new Image();
@@ -834,26 +853,92 @@ function scene2(a){
         t.text = "Loading";
         t.textColor = "white";
         t.textSize = 60;
+        if(goalScene == 5){
+            view0.src = "static/images/aimgame/view0.png";
+            view1.src = "static/images/aimgame/view1.png";
+            view2.src = "static/images/aimgame/view2.png";
+            view3.src = "static/images/aimgame/view3.png";
+            view4.src = "static/images/aimgame/view4.png";
+            view5.src = "static/images/aimgame/view5.png";
+            view6.src = "static/images/aimgame/view6.png";
+            view7.src = "static/images/aimgame/view7.png";
+            rsBg.src = "static/images/background.png";
+            hitsound = new Audio("static/images/aimgame/hitsound2.mp3");
+        }
+        else if(goalScene == 3){
+            view1.src = "static/images/aimgame/view1.png";
+        }
     }
     else{
         totalTime += delta;
         var s = findObject("loadSprite");
         s.rotation += delta/100;
         if(totalTime > 2000){
-            switchScene(3);
+            switchScene(goalScene);
         }
     }
 }
 function scene3(a){
     if(a == "start"){
+        //game select
         loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png");
+        ui.push(new GameObject("select",800,100,0,0));
+        var select = findObject("select");
+        select.text = "Game Select";
+        select.textColor = "white";
+        select.textSize = 64;
+        buttons.push(new GameObject("backb",200,80,300,100));
+        var backb = findObject("backb");
+        backb.image = b1;
+        backb.text = "Back";
+        backb.textColor = "white";
+        backb.textSize = 32;
+        backb.textOffsetY = 8;
+        buttons.push(new GameObject("g1b",400,300,530,300));
+        var g1b = findObject("g1b");
+        g1b.image = b1;
+        g1b.text = "AIM";
+        g1b.textSize = 48;
+        g1b.textOffsetY = 105;
+        ui.push(new GameObject("g1i",400,260,350,200));
+        findObject("g1i").image = view1;
     }
     else{
-        
+        var g1b = findObject("g1b");
+        var g1i = findObject("g1i");
+        var backb = findObject("backb");
+        if(g1b.hovered){
+            g1b.image = b2;
+            g1b.textOffsetY = 115;
+            g1i.y = 270;
+        }
+        else{
+            g1b.image = b1;
+            g1b.textOffsetY = 105;
+            g1i.y = 260;
+        }
+        if(g1b.clicked){
+            click.play();
+            goalScene = 5;
+            switchScene(2);
+        }
+        if(backb.hovered){
+            backb.image = b2;
+            backb.textOffsetY = 12;
+        }
+        else{
+            backb.image = b1;
+            backb.textOffsetY = 8;
+        }
+        if(backb.clicked){
+            click.play();
+            switchScene(1);
+        }
     }
 }
 function scene4(a){
     if(a == "start"){
+        //profile page
         loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png");
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
@@ -887,21 +972,324 @@ function scene4(a){
         }
     }
 }
+var worldNow = 1;
+var countdown = false;
+var countdownTimer = 3999;
+var gameStarted = false; 
+var drawResults = false; 
+var gameTimer = 0;
+var gameScore = 0; 
+var timestring = "0.000";
+var beststring = "X.XXX";
+var topScoreArray = ["1. Loading - X.XXX","2. Loading - X.XXX","3. Loading - X.XXX","4. Loading - X.XXX","5. Loading - X.XXX","6. Loading - X.XXX","7. Loading - X.XXX","8. Loading - X.XXX","9. Loading - X.XXX","10. Loading - X.XXX"];
 function scene5(a){
+    //aim game menu
     if(a == "start"){
-
+        loadNew("id=back^type=nullObject^x=800^y=450^sx=1600^sy=900^image=static/images/background.png");
+        nullObjects.push(new GameObject("mbg",800,450,1600,900));
+        findObject("mbg").image = view0;
+        ui.push(new GameObject("howtoplay",800,300,0,0));
+        var htp = findObject("howtoplay");
+        htp.text = "Click 10 colored blocks as fast as you can!";
+        htp.textSize = 64;
+        htp.textColor = "white";
+        buttons.push(new GameObject("backb",200,80,300,100));
+        var backb = findObject("backb");
+        backb.image = b1;
+        backb.text = "Back";
+        backb.textColor = "white";
+        backb.textSize = 32;
+        backb.textOffsetY = 8;
+        buttons.push(new GameObject("start",800,450,300,100));
+        var start = findObject("start");
+        start.image = b1;
+        start.text = "Start";
+        start.textColor = "white";
+        start.textSize = 32;
+        start.textOffsetY = 8;
     }
     else{
-        
+        var backb = findObject("backb");
+        if(backb.hovered){
+            backb.image = b2;
+            backb.textOffsetY = 12;
+        }
+        else{
+            backb.image = b1;
+            backb.textOffsetY = 8;
+        }
+        if(backb.clicked){
+            click.play();
+            switchScene(3);
+        }
+        var start = findObject("start");
+        if(start.hovered){
+            start.image = b2;
+            start.textOffsetY = 12;
+        }
+        else{
+            start.image = b1;
+            start.textOffsetY = 8;
+        }
+        if(start.clicked){
+            click.play();
+            countdown = true;
+            switchScene(6);
+        }
     }
 }
+socket.on("aimScores", function(names,times){
+    if(drawResults){
+        findObject("allTime1").text = "1. " + names[0] + " - " + times[0];
+        findObject("allTime2").text = "2. " + names[1] + " - " + times[1];
+        findObject("allTime3").text = "3. " + names[2] + " - " + times[2];
+        findObject("allTime4").text = "4. " + names[3] + " - " + times[3];
+        findObject("allTime5").text = "5. " + names[4] + " - " + times[4];
+        findObject("allTime6").text = "6. " + names[5] + " - " + times[5];
+        findObject("allTime7").text = "7. " + names[6] + " - " + times[6];
+        findObject("allTime8").text = "8. " + names[7] + " - " + times[7];
+        findObject("allTime9").text = "9. " + names[8] + " - " + times[8];
+        findObject("allTime10").text = "10. " + names[9] + " - " + times[9];
+    }
+});
 function scene6(a){
+    //aim game game
     if(a == "start"){
-
+        worldNow = 1;
+        countdownTimer = 3999;
+        gameStarted = false;
+        gameTimer = 0;
+        gameScore = 0;
+        drawResults = false;
+        nullObjects.push(new GameObject("mbg",800,450,1600,900));
+        findObject("mbg").image = view0;
+        ui.push(new GameObject("countdown",800,450,0,0));
+        var cntd = findObject("countdown");
+        cntd.textSize = 128;
+        cntd.textColor = "white";
+        ui.push(new GameObject("score",1500,850,0,0));
+        var sc = findObject("score");
+        sc.text = gameScore + "/10";
+        sc.textSize = 64;
+        sc.textColor = "white";
+        ui.push(new GameObject("time",100,850,0,0));
+        var ti = findObject("time");
+        ti.text = "0.000";
+        ti.textSize = 64;
+        ti.textColor = "white";
+        ui.push(new GameObject("resScore",50,150,0,0));
+        var rT = findObject("resScore");
+        rT.textSize = 64;
+        rT.textColor = "white";
+        ui.push(new GameObject("bestScore",50,250,0,0));
+        var bT = findObject("bestScore");
+        bT.textSize = 64;
+        bT.textColor = "white";
+        ui.push(new GameObject("allTime",850,150,0,0));
+        var aT = findObject("allTime");
+        aT.textSize = 48;
+        aT.textColor = "white";
+        //-
+        ui.push(new GameObject("allTime1",850,250,0,0));
+        var aT1 = findObject("allTime1");
+        aT1.textSize = 32;
+        aT1.textColor = "white";
+        ui.push(new GameObject("allTime2",850,300,0,0));
+        var aT2 = findObject("allTime2");
+        aT2.textSize = 32;
+        aT2.textColor = "white";
+        ui.push(new GameObject("allTime3",850,350,0,0));
+        var aT3 = findObject("allTime3");
+        aT3.textSize = 32;
+        aT3.textColor = "white";
+        ui.push(new GameObject("allTime4",850,400,0,0));
+        var aT4 = findObject("allTime4");
+        aT4.textSize = 32;
+        aT4.textColor = "white";
+        ui.push(new GameObject("allTime5",850,450,0,0));
+        var aT5 = findObject("allTime5");
+        aT5.textSize = 32;
+        aT5.textColor = "white";
+        ui.push(new GameObject("allTime6",850,500,0,0));
+        var aT6 = findObject("allTime6");
+        aT6.textSize = 32;
+        aT6.textColor = "white";
+        ui.push(new GameObject("allTime7",850,550,0,0));
+        var aT7 = findObject("allTime7");
+        aT7.textSize = 32;
+        aT7.textColor = "white";
+        ui.push(new GameObject("allTime8",850,600,0,0));
+        var aT8 = findObject("allTime8");
+        aT8.textSize = 32;
+        aT8.textColor = "white";
+        ui.push(new GameObject("allTime9",850,650,0,0));
+        var aT9 = findObject("allTime9");
+        aT9.textSize = 32;
+        aT9.textColor = "white";
+        ui.push(new GameObject("allTime10",850,700,0,0));
+        var aT10 = findObject("allTime10");
+        aT10.textSize = 32;
+        aT10.textColor = "white";
     }
     else{
-        
+        var cntd = findObject("countdown");
+        var sc = findObject("score");
+        var ti = findObject("time");
+        var rT = findObject("resScore");
+        var bT = findObject("bestScore");
+        var aT = findObject("allTime");
+        var aT1 = findObject("allTime1");
+        var aT2 = findObject("allTime2");
+        var aT3 = findObject("allTime3");
+        var aT4 = findObject("allTime4");
+        var aT5 = findObject("allTime5");
+        var aT6 = findObject("allTime6");
+        var aT7 = findObject("allTime7");
+        var aT8 = findObject("allTime8");
+        var aT9 = findObject("allTime9");
+        var aT10 = findObject("allTime10");
+        if(countdown){
+            countdownTimer -= delta;
+            cntd.text = countdownTimer.toString().substring(0,1);
+            if(countdownTimer < 1000){
+                cntd.text = "";
+                countdown = false;
+                gameStarted = true;
+                randomizeWorld();
+            }
+        }
+        if(gameStarted){
+            gameTimer += delta;
+            timestring = (gameTimer/1000).toString().substring(0,5);
+            while(true){
+                if(timestring.length <= 4){
+                    timestring += "0";
+                }
+                else{
+                    break;
+                }
+            }
+            ti.text = timestring;
+            sc.text = gameScore + "/10";
+            if(buttons[0].clicked){
+                hitsound.play();
+                gameScore++;
+                randomizeWorld();
+                if(gameScore == 10){
+                    gameStarted = false;
+                    drawResults = true;
+                    aT1.text = topScoreArray[0];
+                    aT2.text = topScoreArray[1];
+                    aT3.text = topScoreArray[2];
+                    aT4.text = topScoreArray[3];
+                    aT5.text = topScoreArray[4];
+                    aT6.text = topScoreArray[5];
+                    aT7.text = topScoreArray[6];
+                    aT8.text = topScoreArray[7];
+                    aT9.text = topScoreArray[8];
+                    aT10.text = topScoreArray[9];
+                    socket.emit("aimScoreSubmit",getName(),timestring);
+                    buttons.push(new GameObject("toMenu",200,800,300,100));
+                    var tomenu = findObject("toMenu");
+                    tomenu.textColor = "white";
+                    tomenu.textSize = 42;
+                    tomenu.textOffsetY = 8;
+                    buttons.push(new GameObject("toRetry",1400,800,300,100));
+                    var toretry = findObject("toRetry");
+                    toretry.textColor = "white";
+                    toretry.textSize = 42;
+                    toretry.textOffsetY = 8;
+                    findObject("mbg").image = rsBg;
+                }
+            }
+        }
+        if(drawResults){
+            worldTextAlign = "left";
+            sc.text = "";
+            ti.text = "";
+            rT.text = "Your Time: " + timestring;
+            if(getName() != "Guest"){
+                bT.text = "Your Best: " + beststring;
+            }
+            else{
+                bT.textSize = 32;
+                bT.text = "Login with Google to track your best time!";
+            }
+            aT.text = "All Time Best Scores:";
+            var tomenu = findObject("toMenu");
+            var toretry = findObject("toRetry");
+            tomenu.text = "Main Menu";
+            if(tomenu.hovered){
+                tomenu.image = b2;
+                tomenu.textOffsetY = 12;
+            }
+            else{
+                tomenu.image = b1;
+                tomenu.textOffsetY = 8;
+            }
+            if(tomenu.clicked){
+                worldTextAlign = "center";
+                goalScene = 1;
+                switchScene(2);
+            }
+            toretry.text = "Retry";
+            if(toretry.hovered){
+                toretry.image = b2;
+                toretry.textOffsetY = 12;
+            }
+            else{
+                toretry.image = b1;
+                toretry.textOffsetY = 8;
+            }
+            if(toretry.clicked){
+                worldTextAlign = "center";
+                countdown = true;
+                switchScene(6);
+            }
+        }
     }
+}
+function randomizeWorld(){
+    var random;
+    while(true){
+        random = Math.floor(Math.random() * 7) + 1;
+        if(random != worldNow){
+            break;
+        }
+    }
+    var mbg = findObject("mbg");
+    buttons = [];
+    switch(random){
+        case 1:
+            loadNew("id=button^type=button^x=1407^y=512^sx=89^sy=50");
+            mbg.image = view1;
+            break;
+        case 2:
+            loadNew("id=button^type=button^x=1098^y=480^sx=32^sy=25");
+            mbg.image = view2;
+            break;
+        case 3:
+            loadNew("id=button^type=button^x=911^y=478^sx=25^sy=24");
+            mbg.image = view3;
+            break;
+        case 4:
+            loadNew("id=button^type=button^x=187^y=501^sx=73^sy=41");
+            mbg.image = view4;
+            break;
+        case 5:
+            loadNew("id=button^type=button^x=281^y=532^sx=109^sy=68");
+            mbg.image = view5;
+            break;
+        case 6:
+            loadNew("id=button^type=button^x=887^y=565^sx=47^sy=48");
+            mbg.image = view6;
+            break;
+        case 7:
+            loadNew("id=button^type=button^x=623^y=488^sx=37^sy=31");
+            mbg.image = view7;
+            break;
+    }
+    worldNow = random;
 }
 function scene7(a){
     if(a == "start"){
