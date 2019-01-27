@@ -1178,7 +1178,7 @@ function scene6(a){
                 }
             }
             ti.text = timestring;
-            sc.text = gameScore + "/10";
+            sc.text = gameScore + "/15";
             if(buttons[0].clicked){
                 hitsound.play();
                 gameScore++;
