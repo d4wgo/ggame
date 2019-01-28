@@ -398,6 +398,17 @@ fitDiv = false; //if you want the canvas to be in a part of the page instead of 
 */
 var scaleX;
 var scaleY;
+if(fullScreen){
+    fullScreenCanvas();
+}
+else if(fitAspectRatioFullscreen){
+    aspectRatioFullScreenCanvas();
+}
+else if(fitDiv){
+    fitDivCanvas();
+}
+scaleX = canvas.width / virtualWidth;
+scaleY = canvas.height / virtualHeight;
 setInterval(function(){
     if(fullScreen){
         fullScreenCanvas();
