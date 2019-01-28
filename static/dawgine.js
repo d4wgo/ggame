@@ -409,7 +409,7 @@ else if(fitDiv){
 }
 scaleX = canvas.width / virtualWidth;
 scaleY = canvas.height / virtualHeight;
-setInterval(function(){
+window.addEventListener('resize', function(){
     if(fullScreen){
         fullScreenCanvas();
     }
@@ -421,7 +421,8 @@ setInterval(function(){
     }
     scaleX = canvas.width / virtualWidth;
     scaleY = canvas.height / virtualHeight;
-},1000/10); //refreshes canvas size a set times per second - the "10" is changeable to whatever tickrate works the best
+});
+//refreshes canvas size a set times per second - the "10" is changeable to whatever tickrate works the best
 //canvas fit functions
 function fullScreenCanvas(){
     canvas.width = window.innerWidth;
