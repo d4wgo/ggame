@@ -37,8 +37,8 @@ app.get('/',function(req,res){
 app.get('/mobile',function(req,res){
     res.sendFile(path.join(__dirname+'/client/mobile.html'));
 });
-app.get('/edge',function(req,res){
-    res.sendFile(path.join(__dirname+'/client/edge.html'));
+app.get('/ie',function(req,res){
+    res.sendFile(path.join(__dirname+'/client/ie.html'));
 });
 server.listen(8080, function() {
     console.log('Starting server on port 8080');
@@ -47,7 +47,7 @@ io.on('connection', function (socket) {
     socket.on("ping1", function(){
         socket.emit("pong");
     });
-    socket.on("aimScoreSubmit", function(name,time){
+    socket.on("aimScoreSubmit", function(name,time,trueName){
         if(name != "Guest"){
             var writeA = true;
             var preincluded = false;
@@ -82,7 +82,7 @@ io.on('connection', function (socket) {
                 savedArray.timesArray = topAimScoreArrayTime;
                 users.update(savedArray);
             }
-            var tempUser = users.findOne({uname: name});
+            var tempUser = users.findOne({uname: trueName});
             if(tempUser != null){
                 if(tempUser.bestaimtime > parseFloat(time)){
                     tempUser.bestaimtime = parseFloat(time);
@@ -97,6 +97,35 @@ io.on('connection', function (socket) {
         var tempUser = users.findOne({uname: name});
         if(tempUser == null){
             users.insert({uname: name, bestaimtime: 999.9});
+        }
+        else{
+            if(tempUser.preferredName != null){
+                socket.emit("diffname", tempUser.preferredName);
+            }
+        }
+    });
+    socket.on("namechange", function(old,newu){
+        var tempUser = users.findOne({uname: old});
+        if(tempUser != null){
+            var taken = false;
+            for(var i = 0; i < users.length; i++){
+                var u = users[i];
+                if(u.name == newu){
+                    socket.emit("nametaken");
+                    taken = true;
+                }
+                else if(u.preferredName != null){
+                    if(u.preferredName == newu){
+                        socket.emit("nametaken");
+                        taken = true;
+                    }
+                }
+            }
+            if(!taken){
+                tempUser.preferredName = newu;
+                users.update(tempUser);
+                socket.emit("namechangesuccess", newu);
+            }
         }
     });
     socket.on('disconnect', function() {

@@ -794,6 +794,7 @@ function scene1(a){
         b.text = "PLAY";
         b.textColor = "white";
         b.textSize = 60;
+        /*
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
@@ -801,13 +802,11 @@ function scene1(a){
         ui.push(new GameObject("userProfFrame",1520,70,100,100));
         var upf = findObject("userProfFrame");
         upf.image = new Image();
-        upf.image.src = "static/images/profileframe.png";
+        upf.image.src = "static/images/profileframe.png";*/
     }
     else{
         //logic for scene 1
         var b = findObject("buttonPlay");
-        var up = findObject("userProf");
-        var upf = findObject("userProfFrame");
         if(tick1){
             tick1 = false;
         }
@@ -823,16 +822,6 @@ function scene1(a){
             click.play();
             goalScene = 3;
             switchScene(2);
-        }
-        if(up.hovered){
-            upf.image.src = "static/images/profileframehover.png";
-        }
-        else{
-            upf.image.src = "static/images/profileframe.png";
-        }
-        if(up.clicked){
-            click.play();
-            switchScene(4);
         }
     }
 }
@@ -914,11 +903,22 @@ function scene3(a){
         g1b.textOffsetY = 105;
         ui.push(new GameObject("g1i",400,260,350,200));
         findObject("g1i").image = view1;
+        //-
+        buttons.push(new GameObject("userProf",1520,70,88,88));
+        var up = findObject("userProf");
+        up.image = new Image();
+        up.image.src = document.getElementById("profPic").src;
+        ui.push(new GameObject("userProfFrame",1520,70,100,100));
+        var upf = findObject("userProfFrame");
+        upf.image = new Image();
+        upf.image.src = "static/images/profileframe.png";
     }
     else{
         var g1b = findObject("g1b");
         var g1i = findObject("g1i");
         var backb = findObject("backb");
+        var up = findObject("userProf");
+        var upf = findObject("userProfFrame");
         if(g1b.hovered){
             g1b.image = b2;
             g1b.textOffsetY = 115;
@@ -946,8 +946,29 @@ function scene3(a){
             click.play();
             switchScene(1);
         }
+        if(up.hovered){
+            upf.image.src = "static/images/profileframehover.png";
+        }
+        else{
+            upf.image.src = "static/images/profileframe.png";
+        }
+        if(up.clicked){
+            click.play();
+            switchScene(4);
+        }
     }
 }
+socket.on("nametaken", function(){
+    if(scene == 4){
+        nolog.text = "Username Taken";
+    }
+});
+socket.on("namechangesuccess", function(neu){
+    if(scene == 4){
+        nolog.text = "Username Changed";
+        setName(neu);
+    }
+});
 function scene4(a){
     if(a == "start"){
         //profile page
@@ -968,10 +989,28 @@ function scene4(a){
         if(getName().length > 12){
             un.textSize -= getName().length;
         }
+        buttons.push(new GameObject("cun",300,250,300,100));
+        var cun = findObject("cun");
+        cun.image = b1;
+        cun.text = "Change Username";
+        cun.textColor = "white";
+        cun.textSize = 32;
+        cun.textOffsetY = 8;
+        ui.push(new GameObject("nolog",800,250,0,0));
+        nolog.textColor = "white";
+        nolog.textSize = 32;
+        nolog.textOffsetY = 8;
     }
     else{
         var up = findObject("userProf");
         var upf = findObject("userProfFrame");
+        var cun = findObject("cun");
+        var un = findObject("unamespot");
+        var nolog = findObject("nolog");
+        un.textSize = 64;
+        if(getName().length > 12){
+            un.textSize -= getName().length;
+        }
         if(up.hovered){
             upf.image.src = "static/images/profileframehover.png";
         }
@@ -980,7 +1019,30 @@ function scene4(a){
         }
         if(up.clicked){
             click.play();
-            switchScene(1);
+            switchScene(3);
+        }
+        if(cun.hovered){
+            cun.image = b2;
+            cun.textOffsetY = 12;
+        }
+        else{
+            cun.image = b1;
+            cun.textOffsetY = 8;
+        }
+        if(cun.clicked){
+            click.play();
+            if(getName() != "Guest"){
+                var newu = prompt("New Username:");
+                if(newu != "Guest" && newu != getName() && newu != null && newu != ""){
+                    socket.emit("namechange",getTrueName(),newu);
+                }
+            }
+            else{
+                nolog.text = "Login with Google to change your username";
+            }
+        }
+        if(nolog != null && !cun.hovered){
+            nolog.text = "";  
         }
     }
 }
@@ -1022,6 +1084,7 @@ function scene5(a){
     }
     else{
         var backb = findObject("backb");
+        var start = findObject("start");
         if(backb.hovered){
             backb.image = b2;
             backb.textOffsetY = 12;
@@ -1034,7 +1097,6 @@ function scene5(a){
             click.play();
             switchScene(3);
         }
-        var start = findObject("start");
         if(start.hovered){
             start.image = b2;
             start.textOffsetY = 12;
@@ -1208,7 +1270,7 @@ function scene6(a){
                     aT8.text = topScoreArray[7];
                     aT9.text = topScoreArray[8];
                     aT10.text = topScoreArray[9];
-                    socket.emit("aimScoreSubmit",getName(),timestring);
+                    socket.emit("aimScoreSubmit",getName(),timestring,getTrueName());
                     buttons.push(new GameObject("toMenu",200,800,300,100));
                     var tomenu = findObject("toMenu");
                     tomenu.textColor = "white";
