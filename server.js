@@ -108,18 +108,8 @@ io.on('connection', function (socket) {
         var tempUser = users.findOne({uname: old});
         if(tempUser != null){
             var taken = false;
-            for(var i = 0; i < users.length; i++){
-                var u = users[i];
-                if(u.uname == newu){
-                    socket.emit("nametaken");
-                    taken = true;
-                }
-                else if(u.preferredName != null){
-                    if(u.preferredName == newu){
-                        socket.emit("nametaken");
-                        taken = true;
-                    }
-                }
+            if(users.findOne({uname: newu}) != null){
+                taken = true;
             }
             if(!taken){
                 if(topAimScoreArray.includes(old)){
