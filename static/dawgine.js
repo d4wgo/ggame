@@ -881,6 +881,7 @@ function scene2(a){
         }
     }
 }
+var rotationOf = 0;
 function scene3(a){
     if(a == "start"){
         //game select
@@ -909,18 +910,14 @@ function scene3(a){
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
-        up.image.src = document.getElementById("profPic").src;
-        ui.push(new GameObject("userProfFrame",1520,70,100,100));
-        var upf = findObject("userProfFrame");
-        upf.image = new Image();
-        upf.image.src = "static/images/profileframe.png";
+        up.image.src = "static/images/settings.png";
+        up.rotation = rotationOf;
     }
     else{
         var g1b = findObject("g1b");
         var g1i = findObject("g1i");
         var backb = findObject("backb");
         var up = findObject("userProf");
-        var upf = findObject("userProfFrame");
         if(g1b.hovered){
             g1b.image = b2;
             g1b.textOffsetY = 115;
@@ -949,10 +946,8 @@ function scene3(a){
             switchScene(1);
         }
         if(up.hovered){
-            upf.image.src = "static/images/profileframehover.png";
-        }
-        else{
-            upf.image.src = "static/images/profileframe.png";
+            up.rotation += delta/300;
+            rotationOf = up.rotation;
         }
         if(up.clicked){
             click.play();
@@ -980,11 +975,8 @@ function scene4(a){
         buttons.push(new GameObject("userProf",1520,70,88,88));
         var up = findObject("userProf");
         up.image = new Image();
-        up.image.src = document.getElementById("profPic").src;
-        ui.push(new GameObject("userProfFrame",1520,70,100,100));
-        var upf = findObject("userProfFrame");
-        upf.image = new Image();
-        upf.image.src = "static/images/profileframe.png";
+        up.image.src = "static/images/settings.png";
+        up.rotation = rotationOf;
         //-
         nullObjects.push(new GameObject("unamespot",300,110,0,0));
         var un = findObject("unamespot");
@@ -1018,10 +1010,8 @@ function scene4(a){
             un.textSize -= getName().length;
         }
         if(up.hovered){
-            upf.image.src = "static/images/profileframehover.png";
-        }
-        else{
-            upf.image.src = "static/images/profileframe.png";
+            up.rotation += delta/300;
+            rotationOf = up.rotation;
         }
         if(up.clicked){
             click.play();
