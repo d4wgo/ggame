@@ -828,9 +828,6 @@ function scene1(a){
     }
 }
 function signInChange(){
-    if(scene == 1 || scene == 4){
-        findObject("userProf").image.src = document.getElementById("profPic").src;
-    }
 }
 var view0 = new Image();
 var view1 = new Image();
