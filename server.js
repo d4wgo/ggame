@@ -107,11 +107,11 @@ io.on('connection', function (socket) {
     socket.on("namechange", function(old,newu){
         var tempUser = users.findOne({uname: old});
         if(tempUser != null){
-            var taken = false;
             if(users.findOne({uname: newu}) != null){
                 taken = true;
+                socket.emit("nametaken");
             }
-            if(!taken){
+            else{
                 if(topAimScoreArray.includes(old)){
                     topAimScoreArray[topAimScoreArray.indexOf(old)] = newu;
                     var savedArray = users.findOne({uname: "topAimArray"});
