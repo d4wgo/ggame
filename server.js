@@ -110,7 +110,7 @@ io.on('connection', function (socket) {
             var taken = false;
             for(var i = 0; i < users.length; i++){
                 var u = users[i];
-                if(u.name == newu){
+                if(u.uname == newu){
                     socket.emit("nametaken");
                     taken = true;
                 }
