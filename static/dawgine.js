@@ -1010,6 +1010,7 @@ function scene4(a){
         var cun = findObject("cun");
         var un = findObject("unamespot");
         var nolog = findObject("nolog");
+        un.text = "Welcome " + getName();
         un.textSize = 64;
         if(getName().length > 12){
             un.textSize -= getName().length;
