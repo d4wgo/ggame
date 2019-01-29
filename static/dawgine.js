@@ -463,9 +463,11 @@ function getCursorPosition(canvas, event) {
 function pythagTheorem(a,b){
     return Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
 }
+socket.on("diffname", function(nname){
+    setName(nname);
+});
 var scene = 1;
 function start(){
-    scene = 1;
     switchScene(scene);
 }
 var oDistX = 0;
@@ -737,10 +739,6 @@ function loadNew(a){
         }
     }
 }
-socket.on("diffname", function(nname){
-    console.log(nname);
-    name1 = nname;
-});
 function switchScene(a){
     gameObjects = [];
     nullObjects = [];
