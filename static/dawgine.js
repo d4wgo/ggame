@@ -1260,7 +1260,7 @@ function scene6(a){
                 randomizeWorld();
                 if(gameScore == 15){
                     gameStarted = false;
-                    var timeTotal = Date.now() - startTime;
+                    var timeTotal = (Date.now() - startTime) / 1000;
                     var timeStringSend = timeTotal.toString().substring(0,5);
                     timestring = timeStringSend;
                     drawResults = true;
