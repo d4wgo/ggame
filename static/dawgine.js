@@ -1123,6 +1123,7 @@ socket.on("bestScore", function(score,ranking){
         rk.text = "You are rank #" + ranking.toString();
     }
 });
+var startTime;
 function scene6(a){
     //aim game game
     if(a == "start"){
@@ -1235,6 +1236,7 @@ function scene6(a){
             if(countdownTimer < 1000){
                 cntd.text = "";
                 countdown = false;
+                startTime = Date.now();
                 gameStarted = true;
                 randomizeWorld();
             }
@@ -1258,6 +1260,9 @@ function scene6(a){
                 randomizeWorld();
                 if(gameScore == 15){
                     gameStarted = false;
+                    var timeTotal = Date.now() - startTime;
+                    var timeStringSend = timeTotal.toString().substring(0,5);
+                    timestring = timeStringSend;
                     drawResults = true;
                     aT1.text = topScoreArray[0];
                     aT2.text = topScoreArray[1];
@@ -1269,7 +1274,7 @@ function scene6(a){
                     aT8.text = topScoreArray[7];
                     aT9.text = topScoreArray[8];
                     aT10.text = topScoreArray[9];
-                    socket.emit("aimScoreSubmit",getName(),timestring,getTrueName());
+                    socket.emit("aimScoreSubmit",getName(),timeStringSend,getTrueName());
                     buttons.push(new GameObject("toMenu",200,800,300,100));
                     var tomenu = findObject("toMenu");
                     tomenu.textColor = "white";
