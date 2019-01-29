@@ -85,7 +85,8 @@ io.on('connection', function (socket) {
                     tempUser.bestaimtime = parseFloat(time);
                     users.update(tempUser);
                 }
-                socket.emit("bestScore",tempUser.bestaimtime);
+                var placing = topAimScoreArray.indexOf(name);
+                socket.emit("bestScore",tempUser.bestaimtime,placing);
             }
         }
         socket.emit("aimScores",topAimScoreArray,topAimScoreArrayTime);

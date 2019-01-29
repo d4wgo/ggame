@@ -1119,8 +1119,12 @@ socket.on("aimScores", function(names,times){
         findObject("allTime10").text = "10. " + names[9] + " - " + times[9];
     }
 });
-socket.on("bestScore", function(score){
+socket.on("bestScore", function(score,ranking){
     beststring = score.toString();
+    if(scene == 6){
+        var rk = findObject("ranking");
+        rk.text = "You are rank #" + ranking.toString();
+    }
 });
 function scene6(a){
     //aim game game
@@ -1155,6 +1159,10 @@ function scene6(a){
         var bT = findObject("bestScore");
         bT.textSize = 64;
         bT.textColor = "white";
+        ui.push(new GameObject("ranking",50,350,0,0));
+        var rk = findObject("ranking");
+        rk.textSize = 64;
+        rk.textColor = "white";
         ui.push(new GameObject("allTime",850,150,0,0));
         var aT = findObject("allTime");
         aT.textSize = 48;
@@ -1223,6 +1231,7 @@ function scene6(a){
         var aT9 = findObject("allTime9");
         var aT10 = findObject("allTime10");
         var rmsign = findObject("rms");
+        var rk = findObject("ranking");
         if(countdown){
             countdownTimer -= delta;
             cntd.text = countdownTimer.toString().substring(0,1);
