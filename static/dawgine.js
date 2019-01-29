@@ -997,6 +997,7 @@ function scene4(a){
         cun.textSize = 32;
         cun.textOffsetY = 8;
         ui.push(new GameObject("nolog",800,250,0,0));
+        var nolog = findObject("nolog");
         nolog.textColor = "white";
         nolog.textSize = 32;
         nolog.textOffsetY = 8;
