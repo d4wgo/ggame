@@ -960,11 +960,13 @@ function scene3(a){
 }
 socket.on("nametaken", function(){
     if(scene == 4){
+        var nolog = findObject("nolog");
         nolog.text = "Username Taken";
     }
 });
 socket.on("namechangesuccess", function(neu){
     if(scene == 4){
+        var nolog = findObject("nolog");
         nolog.text = "Username Changed";
         setName(neu);
     }
@@ -1041,9 +1043,6 @@ function scene4(a){
             else{
                 nolog.text = "Login with Google to change your username";
             }
-        }
-        if(nolog != null && !cun.hovered){
-            nolog.text = "";  
         }
     }
 }

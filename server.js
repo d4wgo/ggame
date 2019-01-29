@@ -122,6 +122,20 @@ io.on('connection', function (socket) {
                 }
             }
             if(!taken){
+                if(topAimScoreArray.includes(old)){
+                    topAimScoreArray[topAimScoreArray.indexOf(old)] = newu;
+                    var savedArray = users.findOne({uname: "topAimArray"});
+                    savedArray.namesArray = topAimScoreArray;
+                    users.update(savedArray);
+                }
+                else if(tempUser.preferredName != null){
+                    if(topAimScoreArray.includes(tempUser.preferredName)){
+                        topAimScoreArray[topAimScoreArray.indexOf(tempUser.preferredName)] = newu;
+                        var savedArray = users.findOne({uname: "topAimArray"});
+                        savedArray.namesArray = topAimScoreArray;
+                        users.update(savedArray);
+                    }
+                }
                 tempUser.preferredName = newu;
                 users.update(tempUser);
                 socket.emit("namechangesuccess", newu);
