@@ -107,7 +107,7 @@ io.on('connection', function (socket) {
     socket.on("namechange", function(old,newu){
         var tempUser = users.findOne({uname: old});
         if(tempUser != null){
-            if(users.findOne({uname: newu}) != null){
+            if(users.findOne({uname: newu}) != null || users.findOne({preferredName: newu}) != null){
                 taken = true;
                 socket.emit("nametaken");
             }
