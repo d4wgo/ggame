@@ -10,6 +10,10 @@ socket.on("pong",function(){
     var p = Date.now() - origT;
     //console.log("Ping to server is: " + p);
 });
+socket.on("diffname", function(nname){
+    console.log(nname);
+    name1 = nname;
+});
 function setTrueName(a){
     name1 = a;
     name2 = a;
@@ -28,6 +32,4 @@ function signInEvent(){
         socket.emit("signin",name1);
     }
 }
-socket.on("diffname", function(nname){
-    name1 = nname;
-});
+
