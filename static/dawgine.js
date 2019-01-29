@@ -737,6 +737,10 @@ function loadNew(a){
         }
     }
 }
+socket.on("diffname", function(nname){
+    console.log(nname);
+    name1 = nname;
+});
 function switchScene(a){
     gameObjects = [];
     nullObjects = [];
