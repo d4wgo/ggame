@@ -59,22 +59,19 @@ io.on('connection', function (socket) {
                 else{
                     topAimScoreArray.splice(ind,1);
                     topAimScoreArrayTime.splice(ind,1);
-                    topAimScoreArray.push("temp");
-                    topAimScoreArrayTime.push(999.9);
                 }
             }
-            if(parseFloat(time) < topAimScoreArrayTime[9] && writeA){
+            if(writeA){
                 topAimScoreArrayTime.push(parseFloat(time));
+                topAimScoreArray.push("temp");
                 topAimScoreArrayTime.sort(function(a, b){return a - b});
-                for(var i = 0; i < 10; i++){
+                for(var i = 0; i < topAimScoreArrayTime.length; i++){
                     if(topAimScoreArrayTime[i] == parseFloat(time)){
-                        for(var j = 9; j > i; j--){
+                        for(var j = (topAimScoreArray.length - 1); j > i; j--){
                             topAimScoreArray[j] = topAimScoreArray[j - 1];
                         }
                         topAimScoreArray[i] = name;
-                        if(topAimScoreArrayTime.length > 10){
-                            topAimScoreArrayTime.splice(10,1);
-                        }
+                        break;
                     }
                 }
                 var savedArray = users.findOne({uname: "topAimArray"});
