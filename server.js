@@ -89,7 +89,7 @@ io.on('connection', function (socket) {
                 socket.emit("bestScore",tempUser.bestaimtime,placing);
             }
         }
-        socket.emit("aimScores",topAimScoreArray,topAimScoreArrayTime);
+        socket.emit("aimScores",topAimScoreArray.slice(0,10),topAimScoreArrayTime.slice(0,10));
     });
     socket.on("signin", function(name){
         var tempUser = users.findOne({uname: name});
