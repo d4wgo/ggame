@@ -40,6 +40,9 @@ app.get('/mobile',function(req,res){
 app.get('/ie',function(req,res){
     res.sendFile(path.join(__dirname+'/client/ie.html'));
 });
+app.get('/privacy',function(req,res){
+    res.sendFile(path.join(__dirname+'/client/privacy.html'));
+});
 server.listen(8080, function() {
     console.log('Starting server on port 8080');
 });

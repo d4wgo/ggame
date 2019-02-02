@@ -84,4 +84,12 @@ body{
     bottom:0;
     padding-bottom: 6px;
 }
+#bottombar{
+    text-align: center;
+    bottom:2px;
+}
+.bottomlinks{
+    color:black;
+    font-size: 10px;
+}
 
