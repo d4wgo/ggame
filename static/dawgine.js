@@ -1,7 +1,7 @@
 //image refrences
 //---------------
-//var socket = io.connect('https://react.dawg.cc');
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('https://react.dawg.cc');
+//var socket = io.connect('http://localhost:8080');
 var gameObjects = []; //gameobjects are seen by rayscans
 var nullObjects = []; //null objects are not seen by rayscans
 var ui = [];
@@ -12,6 +12,7 @@ function signInEvent(){
     }
 }
 socket.on("diffname", function(nname){
+    console.log("e");
     setName(nname);
 });
 //gameObject
