@@ -1,4 +1,3 @@
-var socket = io.connect('https://react.dawg.cc');
 var origT;
 var name1 = "Guest";
 var name2 = "Guest";
@@ -6,6 +5,7 @@ function pingTest(){
     socket.emit("ping1");
     origT = Date.now();
 }
+/*
 socket.on("pong",function(){
     var p = Date.now() - origT;
     //console.log("Ping to server is: " + p);
@@ -13,7 +13,7 @@ socket.on("pong",function(){
 socket.on("diffname", function(nname){
     console.log(nname);
     name1 = nname;
-});
+});*/
 function setTrueName(a){
     name1 = a;
     name2 = a;
@@ -27,9 +27,10 @@ function getName(){
 function getTrueName(){
     return name2;
 }
+/*
 function signInEvent(){
     if(name1 != "Guest"){
         socket.emit("signin",name1);
     }
-}
+}*/
 

@@ -1,10 +1,19 @@
 //image refrences
 //---------------
-var socket = io.connect('https://react.dawg.cc');
+//var socket = io.connect('https://react.dawg.cc');
+var socket = io.connect('http://localhost:8080');
 var gameObjects = []; //gameobjects are seen by rayscans
 var nullObjects = []; //null objects are not seen by rayscans
 var ui = [];
 var buttons = []; //clickable buttons
+function signInEvent(){
+    if(name1 != "Guest"){
+        socket.emit("signin",name1);
+    }
+}
+socket.on("diffname", function(nname){
+    setName(nname);
+});
 //gameObject
 //syntax:
 //new var newGO = GameObject(id,x,y,posX,posY,sizeX,sizeY);
@@ -463,9 +472,6 @@ function getCursorPosition(canvas, event) {
 function pythagTheorem(a,b){
     return Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
 }
-socket.on("diffname", function(nname){
-    setName(nname);
-});
 var scene = 1;
 function start(){
     switchScene(scene);
