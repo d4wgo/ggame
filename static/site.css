@@ -23,6 +23,8 @@ body{
     position: absolute;
     left:0px;
     top:12%;
+    width:200px;
+    height:600px;
 }
 #rightBar{
     padding:0;
@@ -30,6 +32,8 @@ body{
     position: absolute;
     right:0px;
     top:12%;
+    width:200px;
+    height:600px;
 }
 #bottomBar{
     width:100%;
